@@ -1,0 +1,4 @@
+name: LandRaisers
+version: '${project.version}'
+main: me.marko.landraisers.LandRaisers
+api-version: '1.20'
