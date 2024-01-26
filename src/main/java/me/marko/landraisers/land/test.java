@@ -45,7 +45,7 @@ public class test implements CommandExecutor {
         int[] chunkZero;
 
     }
-    HashMap<UUID, plotDataObject> saveFile;
+    HashMap<UUID, plotDataObject> saveFile = new HashMap<>();
     int xPlot =-1;
     int yPLot = 1;
     int maxPlot = 1;
@@ -57,9 +57,19 @@ public class test implements CommandExecutor {
         parent = main;
     }
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+    public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
         if(!(commandSender instanceof Player)){commandSender.sendMessage(corefunc.colorize("&4FAIL! Sender is not player :(")); return true;}
         Player p = (Player) commandSender;
+
+        if (args.length != 0) {
+            Location loc = p.getLocation();
+            int[] chunk = {loc.getChunk().getX(), loc.getChunk().getZ()};
+            plotDataObject pdo = saveFile.get(p.getUniqueId());
+            if(pdo == null){commandSender.sendMessage(corefunc.colorize("&4FAIL! Player does not have a plot BooWomp")); return true;}
+            commandSender.sendMessage((Math.abs(chunk[0]-pdo.chunkZero[0]))+" Distance of X chunk val");
+            commandSender.sendMessage((Math.abs(chunk[1]-pdo.chunkZero[1]))+" Distance of Y chunk val");
+            return true;
+        }
         Clipboard clip;
         File f = new File(parent.getDataFolder().getPath()+"/schematics/flat.schem");
 

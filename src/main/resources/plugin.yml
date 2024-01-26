@@ -7,3 +7,6 @@ commands:
     description: claimPlots
     usage: /plotTest [subcommand]
     aliases: ["plotClaim", "pc"]
+  crateTest:
+    description: yeah
+    usage: /crateTest

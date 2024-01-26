@@ -1,10 +1,7 @@
 package me.marko.landraisers.farming;
 
-import me.marko.landraisers.core.corefunc;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.Farmland;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -28,6 +25,5 @@ public class wheatPlantTest implements Listener {
         loc.getBlock().setBlockData(farmDat);
         loc.add(0,1,0);
         loc.getBlock().setType(Material.WHEAT_SEEDS);
-        e.getPlayer().sendMessage(corefunc.colorize("&aSHOULD HAVE WORKED :D.. YIPPIE!!"));
     }
 }
