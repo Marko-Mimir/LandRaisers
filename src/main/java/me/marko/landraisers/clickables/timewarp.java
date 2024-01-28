@@ -26,15 +26,7 @@ public class timewarp implements clickable{
 
     @Override
     public boolean check(ItemStack clickedItem, Player p) {
-        if(checkItem == null){
-            checkItem = new ItemStack(Material.CLOCK);
-            checkItem.getData();
-            ItemMeta itemMeta = checkItem.getItemMeta();
-            itemMeta.setDisplayName(corefunc.colorize("&dTimewarper®"));
-            itemMeta.getPersistentDataContainer().set(corefunc.key, PersistentDataType.BOOLEAN, true);
-            checkItem.setItemMeta(itemMeta);
-        }
-        if(clickedItem.getType() == Material.CLOCK){return false;}
+        if(clickedItem.getType() != Material.CLOCK){return false;}
         if(clickedItem.getItemMeta().getPersistentDataContainer().has(corefunc.key)){
             realRun(clickedItem, p);
             return true;
@@ -44,13 +36,20 @@ public class timewarp implements clickable{
 
     public void realRun(ItemStack clickedItem, Player p){
         ItemMeta itemMeta = clickedItem.getItemMeta();
-        if(!(itemMeta.getPersistentDataContainer().has(corefunc.key2))){return;}
+        if(!(itemMeta.getPersistentDataContainer().has(corefunc.key2))){p.sendMessage(corefunc.colorize("&aFail BOOWOMP"));return;}
         int hr = itemMeta.getPersistentDataContainer().get(corefunc.key2, PersistentDataType.INTEGER);
-        //THIS WILL GIVE YOU MONEY BUT I DON'T HAVE A MONEY OR A CROP SYSTEM LMAO
         p.sendMessage(corefunc.colorize("&aPSST! Pretend this is giving you money!"));
-        Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("LandRaisers");
         p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, hr*10, 255, false, false, false));
+    }
 
+    public void init(){
+        if(checkItem == null){
+            checkItem = new ItemStack(Material.CLOCK);
+            checkItem.getData();
+            ItemMeta itemMeta = checkItem.getItemMeta();
+            itemMeta.getPersistentDataContainer().set(corefunc.key, PersistentDataType.BOOLEAN, true);
+            checkItem.setItemMeta(itemMeta);
+        }
     }
 
     @Override
@@ -62,7 +61,7 @@ public class timewarp implements clickable{
         ItemStack returnItem = checkItem;
         ItemMeta returnMeta = returnItem.getItemMeta();
         returnMeta.setDisplayName(corefunc.colorize("&dTimeWarper® "+hr+"hr"));
-        returnMeta.setLore(Arrays.asList(corefunc.colorize("&r'10/10 Easies "+hr+"hr of my life!'"), corefunc.colorize("&i&7Get the money for "+hr+"hr worth of work.")));
+        returnMeta.setLore(Arrays.asList(corefunc.colorize("&f'10/10 Easiest "+hr+"hr of my life!'"), corefunc.colorize("&o&7Get the money for "+hr+"hr worth of work.")));
         returnMeta.getPersistentDataContainer().set(corefunc.key2, PersistentDataType.INTEGER, hr);
         returnItem.setItemMeta(returnMeta);
         return returnItem;

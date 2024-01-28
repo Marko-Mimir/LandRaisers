@@ -2,6 +2,7 @@ package me.marko.landraisers.crate;
 
 import me.marko.landraisers.LandRaisers;
 import me.marko.landraisers.core.corefunc;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -14,17 +15,26 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
 import java.util.Random;
 
 public class openCrate implements CommandExecutor  {
 
-    final LandRaisers parent;
-    private Material[] materials = {Material.CYAN_CONCRETE, Material.RED_CONCRETE, Material.GRAY_CONCRETE};
+    private LandRaisers parent;
+    static public Material[] materials = {Material.CYAN_CONCRETE, Material.RED_CONCRETE, Material.GRAY_CONCRETE};
     public openCrate(LandRaisers main){
         parent = main;
     }
+
+    static public int iterator;
+    static public Item itemEntity;
+    static public BukkitTask task = null;
+    static public Player currentPlayer = null;
 
 
     @Override
@@ -58,16 +68,40 @@ public class openCrate implements CommandExecutor  {
         chestDat.setFacing(dir.getOppositeFace());
         block.setBlockData(chestDat);
         Chest chest = (Chest) block.getState();
-        chest.setCustomName("CLOSE-MARKO-ABCFG");
         chest.open();
+        chest.setCustomName("CLOSE-MARKO-ABCFG");
+        chest.update();
         ItemStack item = new ItemStack(Material.RED_CONCRETE);
         loc.add(0,1,0);
         World w = parent.getServer().getWorld("world");
         Item itemEnt = w.dropItem(loc, item);
+        itemEntity = itemEnt;
         itemEnt.setVelocity(new Vector(0,0,0));
         itemEnt.setCustomNameVisible(true);
         itemEnt.setCustomName(corefunc.colorize("&b&lTESTING YEAH!"));
         itemEnt.setPickupDelay(30000);
+        Random rand = new Random();
+        iterator = rand.nextInt(12);
+        currentPlayer = p;
+
+        task = Bukkit.getScheduler().runTaskTimer(parent, new Runnable() {
+            @Override
+            public void run() {
+                if(iterator != 0){
+                    itemEntity.setItemStack(new ItemStack(materials[new Random().nextInt(materials.length)]));
+                    itemEntity.setCustomName(itemEntity.getCustomName()+iterator);
+                    iterator--;
+                }else {
+                    currentPlayer.getInventory().addItem(itemEntity.getItemStack());
+                    itemEntity.getLocation().getBlock().setType(Material.AIR);
+                    itemEntity.remove();
+                    task.cancel();
+                }
+
+            }
+        }, 10, 10);
+
+
 
         return true;
     }

@@ -18,7 +18,7 @@ public class itemListener implements Listener {
         }
     }
 
-    private ArrayList<clickable> clickables;
+    private ArrayList<clickable> clickables = new ArrayList<>();
 
     public void addClickables(clickable clickable){
         clickables.add(clickable);
@@ -34,7 +34,7 @@ public class itemListener implements Listener {
     public void onItemUse(PlayerInteractEvent e){
         if(e.getAction()!= Action.RIGHT_CLICK_BLOCK){return;}
         if(!e.getHand().equals(EquipmentSlot.HAND)){return;}
-        if(e.getItem().getType() == Material.AIR){return;}
+        if(e.getItem() == null){return;}
         for (clickable item : clickables){
             item.check(e.getItem(), e.getPlayer());
         }

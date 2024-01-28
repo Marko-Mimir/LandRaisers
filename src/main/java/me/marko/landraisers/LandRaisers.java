@@ -1,6 +1,8 @@
 package me.marko.landraisers;
 
+import me.marko.landraisers.clickables.giveItem;
 import me.marko.landraisers.clickables.testItem;
+import me.marko.landraisers.clickables.timewarp;
 import me.marko.landraisers.core.itemListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -23,9 +25,13 @@ public final class LandRaisers extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(itemListener, this);
         getCommand("plotTest").setExecutor(new test(this));
         getCommand("crateTest").setExecutor(new openCrate(this));
+        getCommand("giveItem").setExecutor(new giveItem(itemListener));
 
         //ITEM LISTS
         itemListener.addClickables(new testItem(Material.WHEAT));
+        timewarp clickableTimewarp = new timewarp();
+        clickableTimewarp.init();
+        itemListener.addClickables(clickableTimewarp);
         //work with schematic flat from the server, and paste
         // it in a 4*4 square 32 away from spawn :) so the 1st bottom left chunk would be at 48,0? then (48, 16) (64,0) (64,16)
     }

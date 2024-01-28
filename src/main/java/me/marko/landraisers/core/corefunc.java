@@ -7,6 +7,6 @@ public class corefunc {
     static public String colorize(String text){
         return ChatColor.translateAlternateColorCodes('&', text);
     }
-    static public NamespacedKey key = new NamespacedKey("LandRaisers", "MarkoWuzHere");
-    static public NamespacedKey key2 = new NamespacedKey("LandRaisers", "MarkoWasAlsoHere");
+    static public NamespacedKey key = new NamespacedKey("landraisers", "markowuzhere");
+    static public NamespacedKey key2 = new NamespacedKey("landraisers", "markowasalsohere");
 }

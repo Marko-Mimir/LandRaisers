@@ -10,3 +10,6 @@ commands:
   crateTest:
     description: yeah
     usage: /crateTest
+  giveItem:
+    description: give item
+    usage: /giveItem [itemCode] [ItemArgs..]
