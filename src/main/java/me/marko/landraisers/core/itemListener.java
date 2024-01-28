@@ -1,5 +1,4 @@
 package me.marko.landraisers.core;
-
 import me.marko.landraisers.clickables.clickable;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -12,10 +11,9 @@ import org.bukkit.inventory.EquipmentSlot;
 import java.util.ArrayList;
 
 public class itemListener implements Listener {
-    final private String closeName = "CLOSE-MARKO-ABCFG";
     @EventHandler
     public void onChestOpen(InventoryOpenEvent e){
-        if(e.getView().getTitle().equals(closeName)){
+        if(e.getView().getTitle().equals("CLOSE-MARKO-ABCFG")){
             e.setCancelled(true);
         }
     }
@@ -24,6 +22,9 @@ public class itemListener implements Listener {
 
     public void addClickables(clickable clickable){
         clickables.add(clickable);
+    }
+    public void removeClickables(clickable clickable){
+        clickables.remove(clickable);
     }
     public ArrayList<clickable> getClickables(){
         return clickables;
@@ -37,6 +38,5 @@ public class itemListener implements Listener {
         for (clickable item : clickables){
             item.check(e.getItem(), e.getPlayer());
         }
-
     }
 }

@@ -14,15 +14,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.Random;
 
 public class openCrate implements CommandExecutor  {
 
-    private LandRaisers parent;
+    final LandRaisers parent;
     private Material[] materials = {Material.CYAN_CONCRETE, Material.RED_CONCRETE, Material.GRAY_CONCRETE};
     public openCrate(LandRaisers main){
         parent = main;
@@ -60,6 +58,7 @@ public class openCrate implements CommandExecutor  {
         chestDat.setFacing(dir.getOppositeFace());
         block.setBlockData(chestDat);
         Chest chest = (Chest) block.getState();
+        chest.setCustomName("CLOSE-MARKO-ABCFG");
         chest.open();
         ItemStack item = new ItemStack(Material.RED_CONCRETE);
         loc.add(0,1,0);
